@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MetroConnect</title>
+    <meta name="description" content="MetroConnect Application" />
+    <meta name="author" content="Tech Syndicate" />
+
+    <meta property="og:title" content="MetroConnect" />
+    <meta property="og:description" content="MetroConnect Application" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <script>
+      // Aggressively protect title from any modifications
+      (function() {
+        const cleanTitle = "MetroConnect";
+        document.title = cleanTitle;
+        
+        // Override title property setter
+        const titleElement = document.querySelector("title");
+        if (titleElement) {
+          Object.defineProperty(document, "title", {
+            get: function() { return cleanTitle; },
+            set: function() { titleElement.textContent = cleanTitle; },
+            configurable: true
+          });
+          
+          // Watch for direct text changes
+          const observer = new MutationObserver(function(mutations) {
+            if (titleElement.textContent !== cleanTitle) {
+              titleElement.textContent = cleanTitle;
+            }
+          });
+          observer.observe(titleElement, {
+            childList: true,
+            characterData: true,
+            subtree: true
+          });
+        }
+        
+        // Periodically enforce clean title
+        setInterval(function() {
+          if (document.title !== cleanTitle) {
+            document.title = cleanTitle;
+            if (titleElement) titleElement.textContent = cleanTitle;
+          }
+        }, 50);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

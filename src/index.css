@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 191 91% 48%;
+    --primary-foreground: 222 47% 6%;
+
+    --secondary: 222 30% 14%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 222 30% 14%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 199 89% 48%;
+    --accent-foreground: 222 47% 6%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 191 91% 48%;
+
+    --radius: 0.75rem;
+
+    /* MetroConnect Custom Tokens */
+    --metro-cyan: 191 91% 48%;
+    --metro-blue: 217 91% 60%;
+    --metro-navy: 222 47% 6%;
+    --metro-navy-light: 222 47% 10%;
+    --metro-glow: 191 91% 48%;
+    --metro-success: 142 76% 36%;
+    --metro-warning: 45 93% 47%;
+    
+    /* Glassmorphism */
+    --glass-bg: 222 47% 11%;
+    --glass-border: 222 30% 25%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(222 47% 8%) 0%, hsl(222 47% 4%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(222 47% 12% / 0.8) 0%, hsl(222 47% 8% / 0.6) 100%);
+    
+    /* Shadows */
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
+    --shadow-card: 0 8px 32px hsl(222 47% 4% / 0.5);
+    --shadow-elevated: 0 20px 60px hsl(222 47% 4% / 0.6);
+
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 191 91% 48%;
+    --sidebar-primary-foreground: 222 47% 6%;
+    --sidebar-accent: 222 30% 14%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 30% 18%;
+    --sidebar-ring: 191 91% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* Prevent any styling or pseudo-elements on title */
+  title {
+    all: unset;
+  }
+  
+  title::before,
+  title::after {
+    content: none !important;
+    display: none !important;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-xl border border-border/50 rounded-xl;
+    background: linear-gradient(145deg, hsl(222 47% 12% / 0.6) 0%, hsl(222 47% 8% / 0.4) 100%);
+  }
+
+  .glass-button {
+    @apply bg-primary/10 backdrop-blur-md border border-primary/30 text-primary hover:bg-primary/20 transition-all duration-300;
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px hsl(var(--primary) / 0.5), 0 0 40px hsl(var(--primary) / 0.3);
+  }
+
+  .glow-border {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3), inset 0 0 20px hsl(var(--primary) / 0.1);
+  }
+
+  .metro-line {
+    @apply h-1 rounded-full;
+    background: var(--gradient-primary);
+  }
+
+  .train-marker {
+    @apply w-4 h-4 rounded-full bg-primary animate-pulse;
+    box-shadow: 0 0 20px hsl(var(--primary)), 0 0 40px hsl(var(--primary) / 0.5);
+  }
+
+  .station-dot {
+    @apply w-3 h-3 rounded-full border-2 border-primary bg-background;
+  }
+
+  .station-dot.active {
+    @apply bg-primary;
+    box-shadow: 0 0 10px hsl(var(--primary));
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-train-move {
+    animation: train-move 3s ease-in-out infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 1; 
+    box-shadow: 0 0 20px hsl(var(--primary)), 0 0 40px hsl(var(--primary) / 0.5);
+  }
+  50% { 
+    opacity: 0.8; 
+    box-shadow: 0 0 30px hsl(var(--primary)), 0 0 60px hsl(var(--primary) / 0.7);
+  }
+}
+
+@keyframes train-move {
+  0% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  100% { transform: translateX(-5px); }
+}
