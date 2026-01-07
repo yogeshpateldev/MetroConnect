@@ -83,17 +83,6 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Outfit', sans-serif;
   }
-
-  /* Prevent any styling or pseudo-elements on title */
-  title {
-    all: unset;
-  }
-  
-  title::before,
-  title::after {
-    content: none !important;
-    display: none !important;
-  }
 }
 
 @layer components {

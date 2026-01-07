@@ -3,53 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MetroConnect</title>
-    <meta name="description" content="MetroConnect Application" />
-    <meta name="author" content="Tech Syndicate" />
+    <title>MetroConnect - Ahmedabad-Gandhinagar Metro</title>
+    <meta name="description" content="MetroConnect - Your complete metro companion for Ahmedabad-Gandhinagar Metro. Real-time tracking, instant booking, and seamless journey planning." />
+    <meta name="author" content="MetroConnect" />
+    <meta name="keywords" content="metro, ahmedabad, gandhinagar, metro ticket booking, live train tracking, metro timetable" />
 
-    <meta property="og:title" content="MetroConnect" />
-    <meta property="og:description" content="MetroConnect Application" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
+    <meta property="og:title" content="MetroConnect - Ahmedabad-Gandhinagar Metro" />
+    <meta property="og:description" content="Your complete metro companion. Real-time tracking, instant booking, and seamless journey planning." />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="/favicon.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    
-    <script>
-      // Aggressively protect title from any modifications
-      (function() {
-        const cleanTitle = "MetroConnect";
-        document.title = cleanTitle;
-        
-        // Override title property setter
-        const titleElement = document.querySelector("title");
-        if (titleElement) {
-          Object.defineProperty(document, "title", {
-            get: function() { return cleanTitle; },
-            set: function() { titleElement.textContent = cleanTitle; },
-            configurable: true
-          });
-          
-          // Watch for direct text changes
-          const observer = new MutationObserver(function(mutations) {
-            if (titleElement.textContent !== cleanTitle) {
-              titleElement.textContent = cleanTitle;
-            }
-          });
-          observer.observe(titleElement, {
-            childList: true,
-            characterData: true,
-            subtree: true
-          });
-        }
-        
-        // Periodically enforce clean title
-        setInterval(function() {
-          if (document.title !== cleanTitle) {
-            document.title = cleanTitle;
-            if (titleElement) titleElement.textContent = cleanTitle;
-          }
-        }, 50);
-      })();
-    </script>
+    <meta name="twitter:site" content="@MetroConnect" />
+    <meta name="twitter:title" content="MetroConnect - Ahmedabad-Gandhinagar Metro" />
+    <meta name="twitter:description" content="Your complete metro companion. Real-time tracking, instant booking, and seamless journey planning." />
+    <meta name="twitter:image" content="/favicon.png" />
+
+    <link rel="canonical" href="https://metroconnect.app" />
   </head>
 
   <body>

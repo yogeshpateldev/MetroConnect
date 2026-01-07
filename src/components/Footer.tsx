@@ -1,20 +1,31 @@
 import { Link } from 'react-router-dom';
-import { Train, Github, Twitter, Mail } from 'lucide-react';
+import { Github, Twitter, Mail } from 'lucide-react';
+import logo from '@/assets/logo.png';
+import metroBg from '@/assets/metro-bg.jpg';
 
 export const Footer = () => {
   return (
-    <footer className="bg-secondary/50 border-t border-border py-12">
-      <div className="container mx-auto px-4">
+    <footer className="relative border-t border-border py-12 overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={metroBg} 
+          alt="" 
+          className="w-full h-full object-cover opacity-10"
+        />
+        <div className="absolute inset-0 bg-background/90" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-                <Train className="w-6 h-6 text-primary-foreground" />
+            <Link to="/" className="flex items-center gap-3 mb-4">
+              <img src={logo} alt="MetroConnect Logo" className="h-10 w-auto" />
+              <div>
+                <span className="text-xl font-bold text-foreground">Metro</span>
+                <span className="text-xl font-bold text-cyan-400">Connect</span>
               </div>
-              <span className="text-xl font-bold text-foreground">
-                Metro<span className="text-primary">Connect</span>
-              </span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-md mb-4">
               Your complete metro companion. Real-time tracking, instant booking, and seamless journey planning for Ahmedabad-Gandhinagar Metro.
@@ -40,6 +51,7 @@ export const Footer = () => {
               <li><Link to="/live-tracking" className="text-muted-foreground hover:text-primary transition-colors">Live Tracking</Link></li>
               <li><Link to="/timetable" className="text-muted-foreground hover:text-primary transition-colors">Timetable</Link></li>
               <li><Link to="/book" className="text-muted-foreground hover:text-primary transition-colors">Book Ticket</Link></li>
+              <li><Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
             </ul>
           </div>
 
@@ -55,10 +67,16 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-8 text-center">
-          <p className="text-sm text-muted-foreground">
-            © 2024 MetroConnect. A prototype for educational purposes.
-          </p>
+        {/* Bottom Section */}
+        <div className="border-t border-border mt-8 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-muted-foreground">
+              © 2026 <span className="text-foreground">Metro</span><span className="text-cyan-400">Connect</span>. All rights reserved.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              A <span className="text-primary font-semibold">Passing Metro</span> Initiative
+            </p>
+          </div>
         </div>
       </div>
     </footer>

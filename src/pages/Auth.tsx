@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Train, Mail, Lock, User, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,6 +9,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { z } from 'zod';
+import logo from '@/assets/logo.png';
+import heroImage from '@/assets/metro-city.jpg';
 
 const emailSchema = z.string().email('Invalid email address');
 const passwordSchema = z.string().min(6, 'Password must be at least 6 characters');
@@ -121,160 +123,196 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
+    <div className="min-h-screen bg-background flex">
+      {/* Left Side - Image */}
+      <div className="hidden lg:block lg:w-1/2 relative">
+        <img 
+          src={heroImage} 
+          alt="Metro city" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent" />
+        <div className="absolute inset-0 flex items-center justify-center p-12">
+          <div className="max-w-md">
+            <motion.h2
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-4xl font-bold text-foreground mb-4"
+            >
+              Connecting Cities,
+              <br />
+              <span className="text-gradient">Building Communities</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-muted-foreground"
+            >
+              Experience reliable, efficient, and sustainable metro travel across Ahmedabad and Gandhinagar.
+            </motion.p>
+          </div>
+        </div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md relative z-10"
-      >
-        {/* Logo */}
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
-            <Train className="w-8 h-8 text-primary-foreground" />
-          </div>
-          <span className="text-3xl font-bold text-foreground">
-            Metro<span className="text-primary">Connect</span>
-          </span>
+      {/* Right Side - Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4">
+        {/* Animated Background */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none lg:hidden">
+          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" />
+          <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
         </div>
 
-        <Card className="glass-card border-border/50">
-          <CardHeader className="text-center pb-2">
-            <CardTitle className="text-2xl font-bold">
-              {isLogin ? 'Welcome Back' : 'Create Account'}
-            </CardTitle>
-            <CardDescription>
-              {isLogin 
-                ? 'Sign in to access your metro tickets and wallet'
-                : 'Join MetroConnect for seamless metro travel'
-              }
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {!isLogin && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-md relative z-10"
+        >
+          {/* Logo */}
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <img src={logo} alt="MetroConnect Logo" className="h-14 w-auto" />
+            <div className="flex flex-col">
+              <div className="text-2xl font-bold">
+                <span className="text-foreground">Metro</span>
+                <span className="text-cyan-400">Connect</span>
+              </div>
+            </div>
+          </div>
+
+          <Card className="glass-card border-border/50">
+            <CardHeader className="text-center pb-2">
+              <CardTitle className="text-2xl font-bold">
+                {isLogin ? 'Welcome Back' : 'Create Account'}
+              </CardTitle>
+              <CardDescription>
+                {isLogin 
+                  ? 'Sign in to access your metro tickets and wallet'
+                  : 'Join MetroConnect for seamless metro travel'
+                }
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {!isLogin && (
+                  <div className="space-y-2">
+                    <Label htmlFor="fullName">Full Name</Label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        id="fullName"
+                        type="text"
+                        placeholder="Enter your full name"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        className="pl-10"
+                      />
+                    </div>
+                    {errors.fullName && (
+                      <p className="text-sm text-destructive">{errors.fullName}</p>
+                    )}
+                  </div>
+                )}
+
                 <div className="space-y-2">
-                  <Label htmlFor="fullName">Full Name</Label>
+                  <Label htmlFor="email">Email</Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
-                      id="fullName"
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       className="pl-10"
                     />
                   </div>
-                  {errors.fullName && (
-                    <p className="text-sm text-destructive">{errors.fullName}</p>
+                  {errors.email && (
+                    <p className="text-sm text-destructive">{errors.email}</p>
                   )}
                 </div>
-              )}
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10"
-                  />
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      id="password"
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="pl-10 pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                  {errors.password && (
+                    <p className="text-sm text-destructive">{errors.password}</p>
+                  )}
                 </div>
-                {errors.email && (
-                  <p className="text-sm text-destructive">{errors.email}</p>
-                )}
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-10"
-                  />
+                <Button
+                  type="submit"
+                  className="w-full"
+                  variant="hero"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                      {isLogin ? 'Signing In...' : 'Creating Account...'}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      {isLogin ? 'Sign In' : 'Create Account'}
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  )}
+                </Button>
+              </form>
+
+              <div className="mt-6 text-center">
+                <p className="text-muted-foreground">
+                  {isLogin ? "Don't have an account?" : 'Already have an account?'}
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    onClick={() => {
+                      setIsLogin(!isLogin);
+                      setErrors({});
+                    }}
+                    className="ml-2 text-primary hover:underline font-medium"
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {isLogin ? 'Sign Up' : 'Sign In'}
                   </button>
-                </div>
-                {errors.password && (
-                  <p className="text-sm text-destructive">{errors.password}</p>
-                )}
+                </p>
               </div>
+            </CardContent>
+          </Card>
 
-              <Button
-                type="submit"
-                className="w-full"
-                variant="hero"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                    {isLogin ? 'Signing In...' : 'Creating Account...'}
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    {isLogin ? 'Sign In' : 'Create Account'}
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                )}
-              </Button>
-            </form>
-
-            <div className="mt-6 text-center">
-              <p className="text-muted-foreground">
-                {isLogin ? "Don't have an account?" : 'Already have an account?'}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsLogin(!isLogin);
-                    setErrors({});
-                  }}
-                  className="ml-2 text-primary hover:underline font-medium"
-                >
-                  {isLogin ? 'Sign Up' : 'Sign In'}
-                </button>
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Guest Access */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-6 text-center"
-        >
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/')}
-            className="text-muted-foreground hover:text-foreground"
+          {/* Guest Access */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="mt-6 text-center"
           >
-            Continue as Guest
-          </Button>
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/')}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              Continue as Guest
+            </Button>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 };

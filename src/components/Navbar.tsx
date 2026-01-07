@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Train, MapPin, Clock, Ticket, User, LogIn, Wallet } from 'lucide-react';
+import { Menu, X, Train, MapPin, Clock, Ticket, LogIn, Wallet, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import logo from '@/assets/logo.png';
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Train },
@@ -11,6 +12,7 @@ const navLinks = [
   { href: '/timetable', label: 'Timetable', icon: Clock },
   { href: '/live-tracking', label: 'Live Tracking', icon: Train },
   { href: '/book', label: 'Book Ticket', icon: Ticket },
+  { href: '/about', label: 'About', icon: Info },
 ];
 
 export const Navbar = () => {
@@ -24,12 +26,11 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <Train className="w-6 h-6 text-primary-foreground" />
+            <img src={logo} alt="MetroConnect Logo" className="h-10 w-auto" />
+            <div className="hidden sm:flex">
+              <span className="text-lg font-bold text-foreground">Metro</span>
+              <span className="text-lg font-bold text-cyan-400">Connect</span>
             </div>
-            <span className="text-xl font-bold text-foreground">
-              Metro<span className="text-primary">Connect</span>
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -113,6 +114,29 @@ export const Navbar = () => {
                   </Link>
                 );
               })}
+              {user ? (
+                <Link
+                  to="/profile"
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    location.pathname === '/profile'
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                  }`}
+                >
+                  <Wallet className="w-5 h-5" />
+                  Profile
+                </Link>
+              ) : (
+                <Link
+                  to="/auth"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-primary bg-primary/10"
+                >
+                  <LogIn className="w-5 h-5" />
+                  Login / Sign Up
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
